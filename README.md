@@ -2,7 +2,8 @@
 
 Backend de aplicación Full Stack para gestión de solicitudes de vehículos.
 
-API REST construida con FastAPI, conectada a PostgreSQL en la nube y desplegada en Render.
+API REST construida con FastAPI, conectada a PostgreSQL en la nube.
+ Dockerizado y listo para ejecutarse en contenedores.
 
 ---
 
@@ -28,9 +29,48 @@ https://carapp-backend-34v5.onrender.com/docs
 - SQLAlchemy
 - Pydantic
 - PostgreSQL
+- Docker
+- Docker Compose
 - Uvicorn
 - Render (deploy)
 
+---
+
+## 🐳 Ejecutar con Docker
+
+Clonar el repositorio:
+
+git clone https://github.com/tuusuario/carapp.git
+cd Backend
+
+Construir y levantar contenedores:
+
+docker compose up --build
+
+La API estará disponible en:
+
+http://localhost:8000/docs
+
+
+🔹 Contenedores
+
+El sistema se compone de dos contenedores:
+
+Backend
+
+FastAPI
+
+Uvicorn
+
+SQLAlchemy
+
+Ejecutado en python:3.11-slim
+
+Base de datos
+
+PostgreSQL 15
+
+Healthcheck habilitado para asegurar disponibilidad antes de que el backend inicie
 ---
 
 ## 📂 Arquitectura
@@ -39,15 +79,36 @@ https://carapp-backend-34v5.onrender.com/docs
 backend/
 │
 ├── app/
-│ ├── main.py
-│ ├── api/v1/endpoints/
-│ ├── core/
-│ ├── models/
-│ ├── schemas/
-│ └── crud/
+│   ├── main.py
+│   │
+│   ├── api/
+│   │   └── v1/
+│   │       ├── endpoints/
+│   │       └── __init__.py
+│   │
+│   ├── core/
+│   │   ├── config.py
+│   │   ├── database.py
+│   │   └── __init__.py
+│   │
+│   ├── models/
+│   │   └── __init__.py
+│   │
+│   ├── schemas/
+│   │   └── __init__.py
+│   │
+│   ├── crud/
+│   │   └── __init__.py
+│   │
+│   └── __init__.py
 │
+├── tests/
+│
+├── .dockerignore
+├── Dockerfile
+├── docker-compose.yml
 ├── requirements.txt
-└── .env (solo desarrollo)
+└── .env
 
 
 Arquitectura organizada por capas:
